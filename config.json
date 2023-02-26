@@ -1,0 +1,11 @@
+{
+  "prefix": "b!",
+  "token": "MTA3OTQ5NDE5OTM1Njk1MjY1Ng.GQKkzr.JRyCSMJKvimpuqM3QDLF2AhkXxidALUB-a9TSg",
+  "permissions": "1079494199356952656",
+  "application_id": "YOUR_APPLICATION_ID_HERE",
+  "sync_commands_globally": false,
+  "owners": [
+    727965815214833824,
+    452689824646823937
+  ]
+}
