@@ -78,7 +78,7 @@ bot = commands.Bot(
 
 # Setup both of the loggers
 
-    
+
 class LoggingFormatter(logging.Formatter):
     # Colors
     black = "\x1b[30m"
@@ -154,7 +154,7 @@ bot.config = config
 async def on_ready() -> None:
     bot.logger.info(f"Logged in as {bot.user.name}")
     bot.logger.info(f"Command Prefix {bot.command_prefix}")
-    
+
     bot.logger.info(f"discord.py API version: {discord.__version__}")
     bot.logger.info(f"Python version: {platform.python_version()}")
     bot.logger.info(f"Running on: {platform.system()} {platform.release()} ({os.name})")
@@ -181,10 +181,16 @@ async def on_message(message: discord.Message) -> None:
 
     :param message: The message that was sent.
     """
+    if contains_eth_address(message.content):
+        await message.channel.send("ETH address detected, pls use cscane command to scan for safety")
     if message.author == bot.user or message.author.bot:
         return
     await bot.process_commands(message)
 
+import re
+eth_address_pattern = re.compile(r'^0x[a-fA-F0-9]{40}$')
+def contains_eth_address(string):
+    return bool(eth_address_pattern.match(string))
 
 @bot.event
 async def on_command_completion(context: Context) -> None:
@@ -196,6 +202,7 @@ async def on_command_completion(context: Context) -> None:
     full_command_name = context.command.qualified_name
     split = full_command_name.split(" ")
     executed_command = str(split[0])
+
     if context.guild is not None:
         bot.logger.info(
             f"Executed {executed_command} command in {context.guild.name} (ID: {context.guild.id}) by {context.author} (ID: {context.author.id})"
