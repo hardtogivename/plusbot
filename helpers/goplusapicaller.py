@@ -15,11 +15,24 @@ def getsupportChain():
 def getWalletDescriotion(walletaddr):
     return "Wallet: " + walletaddr
 
-def getContractDescriotion(contractaddr):
-    return "Contract: " + contractaddr
+
+def getContractScan(network, address):
+    if network is None:
+        network = 1
+
+    url = "https://api.gopluslabs.io/api/v1/token_security/{}?contract_addresses={}".format(network, address)
+
+
+    payload={}
+    headers = {}
+
+    response = requests.request("GET", url, headers=headers, data=payload)
+
+    return response
 
 
 if __name__ == "__main__":
     print(getsupportChain())
     print(getWalletDescriotion("0x1234"))
-    print(getContractDescriotion("0x1234"))
+    print(
+        getContractScan(1, "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d").text)
