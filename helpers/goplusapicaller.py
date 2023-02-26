@@ -1,4 +1,4 @@
- # https://docs.gopluslabs.io/
+# https://docs.gopluslabs.io/
 
 import requests
 
@@ -16,4 +16,10 @@ def getWalletDescriotion(walletaddr):
     return "Wallet: " + walletaddr
 
 def getContractDescriotion(contractaddr):
-    return "Contract: " + contractaddrpython
+    return "Contract: " + contractaddr
+
+
+if __name__ == "__main__":
+    print(getsupportChain())
+    print(getWalletDescriotion("0x1234"))
+    print(getContractDescriotion("0x1234"))
