@@ -18,7 +18,7 @@ import aiosqlite
 import discord
 from discord.ext import commands, tasks
 from discord.ext.commands import Bot, Context
-
+from discord import app_commands
 import exceptions
 
 if not os.path.isfile(f"{os.path.realpath(os.path.dirname(__file__))}/config.json"):
@@ -68,17 +68,17 @@ It is recommended to use slash commands and therefore not use prefix commands.
 
 If you want to use prefix commands, make sure to also enable the intent below in the Discord developer portal.
 """
-# intents.message_content = True
+intents.message_content = True
 
-bot = Bot(
-    command_prefix=commands.when_mentioned_or(config["prefix"]),
+bot = commands.Bot(
+    command_prefix='$',
     intents=intents,
-    help_command=None,
+    help_command=None, #todo add help command
 )
 
 # Setup both of the loggers
 
-
+    
 class LoggingFormatter(logging.Formatter):
     # Colors
     black = "\x1b[30m"
@@ -152,10 +152,9 @@ bot.config = config
 
 @bot.event
 async def on_ready() -> None:
-    """
-    The code in this event is executed when the bot is ready.
-    """
     bot.logger.info(f"Logged in as {bot.user.name}")
+    bot.logger.info(f"Command Prefix {bot.command_prefix}")
+    
     bot.logger.info(f"discord.py API version: {discord.__version__}")
     bot.logger.info(f"Python version: {platform.python_version()}")
     bot.logger.info(f"Running on: {platform.system()} {platform.release()} ({os.name})")

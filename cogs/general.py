@@ -14,13 +14,22 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 from discord.ext.commands import Context
-
+from discord.ext import commands, tasks
 from helpers import checks
 
 
 class General(commands.Cog, name="general"):
     def __init__(self, bot):
         self.bot = bot
+
+
+    @commands.hybrid_command(name="ping3")
+    async def ping2(ctx, *args):
+        response = ""
+        for arg in args:
+            response = response + " " + arg
+        await ctx.channel.send("pong")
+    
 
     @commands.hybrid_command(
         name="help", description="List all commands the bot has loaded."
@@ -239,6 +248,18 @@ class General(commands.Cog, name="general"):
                         color=0xE02B2B,
                     )
                 await context.send(embed=embed)
+
+
+
+
+@app_commands.guilds(discord.Object(id=1079495193172131870)) # Place your guild ID here
+@tasks.loop(minutes=1.0)
+async def status_task() -> None:
+    """
+    Setup the game status task of the bot.
+    """
+    statuses = ["bing chilling"]
+    await bot.change_presence(activity=discord.Game(random.choice(statuses)))
 
 
 async def setup(bot):
