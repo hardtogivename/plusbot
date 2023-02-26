@@ -2,7 +2,7 @@
 
 import unittest
 
-
+from helpers import goplusapicaller
 class TestStringMethods(unittest.TestCase):
     def test_upper(self):
         self.assertEqual('foo'.upper(), 'FOO')
@@ -12,7 +12,6 @@ class TestStringMethods(unittest.TestCase):
         self.assertFalse('Foo'.isupper())
 
     def test_hello(self):
-        from helpers.goplusapicaller import hello
         self.assertEqual(goplusapicaller.hello(), 'hello')
 
 
