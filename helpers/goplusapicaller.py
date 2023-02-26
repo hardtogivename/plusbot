@@ -8,8 +8,12 @@ def hello():
 def getsupportChain():
     # send a get request to this url https://api.gopluslabs.io/api/v1/supported_chains?name=nft_securit
     # and get the response
-    response = requests.get("https://api.gopluslabs.io/api/v1/supported_chains?name=nft_securit")
-    return response.json()
+    response = requests.get("https://api.gopluslabs.io/api/v1/supported_chains")
+    if response.status_code != 200:
+        raise Exception("Error: " + response.text)
+    response = response.json()
+    return dict(map(lambda x : (x["name"],x["id"]),   response["result"]))
+
 
 
 def getWalletDescriotion(walletaddr):
@@ -27,12 +31,16 @@ def getContractScan(network, address):
     headers = {}
 
     response = requests.request("GET", url, headers=headers, data=payload)
+    if response.status_code != 200:
+        raise Exception("Error: " + response.text)
+    
 
-    return response
+    return response.json()["result"]
 
 
 if __name__ == "__main__":
-    print(getsupportChain())
+    import json
+    print(dict(getsupportChain()))
     print(getWalletDescriotion("0x1234"))
     print(
-        getContractScan(1, "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d").text)
+        json.dumps(getContractScan(1, "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d"), indent=2))

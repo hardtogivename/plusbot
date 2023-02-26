@@ -14,6 +14,12 @@ class TestStringMethods(unittest.TestCase):
     def test_hello(self):
         self.assertEqual(goplusapicaller.hello(), 'hello')
 
+    def test_getContractScan(self):
+        self.assertEqual(
+            goplusapicaller.getContractScan(
+                1, "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d"),
+            "Wallet: 0x1234")
+
 
 if __name__ == '__main__':
     unittest.main()
