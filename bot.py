@@ -188,9 +188,9 @@ async def on_message(message: discord.Message) -> None:
     await bot.process_commands(message)
 
 import re
-eth_address_pattern = re.compile(r'^0x[a-fA-F0-9]{40}$')
+eth_address_pattern = re.compile(r'0x[a-fA-F0-9]{40}')
 def contains_eth_address(string):
-    return bool(eth_address_pattern.match(string))
+    return bool(eth_address_pattern.search(string))
 
 @bot.event
 async def on_command_completion(context: Context) -> None:
