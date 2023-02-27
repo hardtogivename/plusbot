@@ -182,7 +182,7 @@ async def on_message(message: discord.Message) -> None:
     :param message: The message that was sent.
     """
     if contains_eth_address(message.content):
-        await message.channel.send("ETH address detected, pls use cscane command to scan for safety")
+        await message.channel.send("ETH address detected, pls use $cscan command to scan for safety. The syntax is $cscan [chain id] [address]")
     if message.author == bot.user or message.author.bot:
         return
     await bot.process_commands(message)
