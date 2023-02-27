@@ -66,18 +66,7 @@ class GoPlus(commands.Cog, name="goplus"):
         embed.add_field(name="address", value=address, inline=False)
         embed.add_field(name="holder_count",
                         value=ret[address.lower()]["holder_count"], inline=False)
-
-        """
-        {
-            "address": "0xdb5485c85bd95f38f9def0ca85499ef67dc581c0",
-            "tag": "",
-            "is_contract": 1,
-            "balance": "250.0",
-            "percent": "0.025000000000000000",
-            "is_locked": 0
-            },
         
-        """
         topHolders = ret[address.lower()]["holders"]
         for index, h in enumerate(topHolders[0:3]):
             holderEmbed = discord.Embed(
@@ -96,6 +85,54 @@ class GoPlus(commands.Cog, name="goplus"):
             await context.send(embed=holderEmbed)
         await context.send(embed=embed)
 
+
+    @commands.hybrid_command(
+        name="nftscan",
+        description="Scan an nft for contracts",
+    )
+    @checks.not_blacklisted()
+    async def nftContractScan(self, context: Context, network: str, address: str = "0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D"
+                           ) -> None:
+        """
+        Kick a user out of the server.
+
+        :param context: The hybrid command context.
+        :param network: [1] Ethereum Mainnet
+        :param address: .
+        """
+        import requests
+        from helpers import goplusapicaller
+        ret = goplusapicaller.getnftSecurity(network, address)
+        pprint = json.dumps(ret, indent=2)
+        print(pprint)
+
+        embed = discord.Embed(
+            title="NFT Collection Card",
+            color=0xE02B2B,
+        )
+        #embed NFT meta data into an embed
+        for k, v in dict(ret).items():
+            if type(v) is int or type(v) is float or type(v) is str:
+                embed.add_field(name=k, value=v, inline=False)
+     
+        
+        # topHolders = ret[address.lower()]["holders"]
+        # for index, h in enumerate(topHolders[0:3]):
+        #     holderEmbed = discord.Embed(
+        #         title="Holder Card " + str(index + 1),
+        #         color=0xE02B2B,
+        #     )
+        #     holderEmbed.add_field(
+        #         name="name", value=h["address"], inline=False)
+        #     holderEmbed.add_field(name="tag", value=h["tag"], inline=True)
+        #     holderEmbed.add_field(name="is_contract",
+        #                           value=h["is_contract"], inline=True)
+        #     holderEmbed.add_field(
+        #         name="balance", value=h["balance"], inline=False)
+        #     holderEmbed.add_field(
+        #         name="percent", value=h["percent"], inline=True)
+        #     await context.send(embed=holderEmbed)
+        await context.send(embed=embed)
 
 # And then we finally add the cog to the bot so that it can load, unload, reload and use it's content.
 async def setup(bot):
