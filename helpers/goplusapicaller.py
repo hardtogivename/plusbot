@@ -68,7 +68,13 @@ def extractSafeyVector(address, contractResult):
         "is_proxy":
         bool(int(firstItem.get("is_proxy", "Unknown"))),
         "buy_tax":
-        firstItem.get("buy_tax", "Unknown"),
+        firstItem.get("buy_tax", "None"),
+        "sell_tax":
+        firstItem.get("sell_tax", "None"),
+        "token_name":
+        firstItem.get("token_name", "Unknown"),
+        "lp_holder_count":
+        firstItem.get("lp_holder_count", "Unknown"),
     }
 
 

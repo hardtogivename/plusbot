@@ -173,6 +173,11 @@ async def status_task() -> None:
     statuses = ["With the blockchain", "With the Ethereum blockchain"]
     await bot.change_presence(activity=discord.Game(random.choice(statuses)))
 
+import re
+eth_address_pattern = re.compile(r'0x[a-fA-F0-9]{40}')
+def contains_eth_address(string):
+    return bool(eth_address_pattern.search(string))
+
 
 @bot.event
 async def on_message(message: discord.Message) -> None:
@@ -186,11 +191,6 @@ async def on_message(message: discord.Message) -> None:
     if message.author == bot.user or message.author.bot:
         return
     await bot.process_commands(message)
-
-import re
-eth_address_pattern = re.compile(r'0x[a-fA-F0-9]{40}')
-def contains_eth_address(string):
-    return bool(eth_address_pattern.search(string))
 
 @bot.event
 async def on_command_completion(context: Context) -> None:
