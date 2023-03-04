@@ -11,7 +11,6 @@ from discord.ext.commands import Context
 import discord
 import json
 from helpers import checks
-from discord import app_commands
 
 
 # Here we name the cog and create a new class for the cog.
@@ -67,7 +66,7 @@ class GoPlus(commands.Cog, name="goplus"):
         embed.add_field(name="address", value=address, inline=False)
         embed.add_field(name="holder_count",
                         value=ret[address.lower()]["holder_count"], inline=False)
-
+        
         topHolders = ret[address.lower()]["holders"]
         for index, h in enumerate(topHolders[0:3]):
             holderEmbed = discord.Embed(
@@ -85,6 +84,7 @@ class GoPlus(commands.Cog, name="goplus"):
                 name="percent", value=h["percent"], inline=True)
             await context.send(embed=holderEmbed)
         await context.send(embed=embed)
+
 
     @commands.hybrid_command(
         name="nftscan",
@@ -110,11 +110,12 @@ class GoPlus(commands.Cog, name="goplus"):
             title="NFT Collection Card",
             color=0xE02B2B,
         )
-        # embed NFT meta data into an embed
+        #embed NFT meta data into an embed
         for k, v in dict(ret).items():
             if type(v) is int or type(v) is float or type(v) is str:
                 embed.add_field(name=k, value=v, inline=False)
-
+     
+        
         # topHolders = ret[address.lower()]["holders"]
         # for index, h in enumerate(topHolders[0:3]):
         #     holderEmbed = discord.Embed(
@@ -132,38 +133,7 @@ class GoPlus(commands.Cog, name="goplus"):
         #         name="percent", value=h["percent"], inline=True)
         #     await context.send(embed=holderEmbed)
         await context.send(embed=embed)
-@commands.hybrid_command(
-        name="bitcoin",
-        description="Get the current price of bitcoin.",
-    )
-@checks.not_blacklisted()
-async def bitcoin(self, context: Context) -> None:
-        """
-        Get the current price of bitcoin.
 
-        :param context: The hybrid command context.
-        """
-        # This will prevent your bot from stopping everything when doing a web request - see: https://discordpy.readthedocs.io/en/stable/faq.html#how-do-i-make-a-web-request
-        async with aiohttp.ClientSession() as session:
-            async with session.get(
-                "https://api.coindesk.com/v1/bpi/currentprice/BTC.json"
-            ) as request:
-                if request.status == 200:
-                    data = await request.json(
-                        content_type="application/javascript"
-                    )  # For some reason the returned content is of type JavaScript
-                    embed = discord.Embed(
-                        title="Bitcoin price",
-                        description=f"The current price is {data['bpi']['USD']['rate']} :dollar:",
-                        color=0x9C84EF,
-                    )
-                else:
-                    embed = discord.Embed(
-                        title="Error!",
-                        description="There is something wrong with the API, please try again later",
-                        color=0xE02B2B,
-                    )
-                await context.send(embed=embed)
 # And then we finally add the cog to the bot so that it can load, unload, reload and use it's content.
 async def setup(bot):
     await bot.add_cog(GoPlus(bot))
