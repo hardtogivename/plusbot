@@ -45,7 +45,7 @@ class GoPlus(commands.Cog, name="goplus"):
         description="Scan an address for contracts",
     )
     @checks.not_blacklisted()
-    async def contractScan(self, context: Context, network: str, address: str = "0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D"
+    async def contractScan(self, context: Context, network: str = "1", address: str = "0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D"
                            ) -> None:
         """
         Kick a user out of the server.
@@ -102,7 +102,7 @@ class GoPlus(commands.Cog, name="goplus"):
         """
         import requests
         from helpers import goplusapicaller
-        ret = goplusapicaller.getnftSecurity(network, address)
+        ret = goplusapicaller.getNFTSecurity(network, address)
         pprint = json.dumps(ret, indent=2)
         print(pprint)
 
