@@ -55,14 +55,20 @@ def extractSafeyVector(address, contractResult):
     firstItem = contractResult[address.lower()]
     # print(firstItem)
     return {
-        "is_blacklisted": bool(int(firstItem["is_blacklisted"])),
-        "is_honeypot": bool(int(firstItem["is_honeypot"])),
-        "is_in_dex": bool(int(firstItem["is_in_dex"])),
-        "is_open_source": bool(int(firstItem["is_open_source"])),
-        "is_proxy": bool(int(firstItem["is_proxy"])),
+        "is_blacklisted":
+        bool(int(firstItem.get("is_blacklisted", "Unknown"))),
+        "is_honeypot":
+        bool(int(firstItem.get("is_honeypot", "Unknown"))),
+        "is_in_dex":
+        bool(int(firstItem.get("is_in_dex", "Unknown"))),
+        "is_open_source":
+        bool(int(firstItem.get("is_open_source", "Unknown"))),
         "can_take_back_ownership":
-        bool(int(firstItem["can_take_back_ownership"])),
-        "buy_tax": (firstItem["buy_tax"]),
+        bool(int(firstItem.get("can_take_back_ownership", "Unknown"))),
+        "is_proxy":
+        bool(int(firstItem.get("is_proxy", "Unknown"))),
+        "buy_tax":
+        firstItem.get("buy_tax", "Unknown"),
     }
 
 
