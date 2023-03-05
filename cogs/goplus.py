@@ -12,7 +12,7 @@ import discord
 import json
 from helpers import checks
 from discord import app_commands
-
+from helpers import goplusapicaller
 
 # Here we name the cog and create a new class for the cog.
 class GoPlus(commands.Cog, name="goplus"):
@@ -39,7 +39,22 @@ class GoPlus(commands.Cog, name="goplus"):
 
         # Don't forget to remove "pass", I added this just because there's no content in the method.
         pass
+    @commands.hybrid_command(
+        name="chainids",
+        description="This command will return the chain ids for the supported networks.",
+    )
+    # This will only allow non-blacklisted members to execute the command
+    @checks.not_blacklisted()
+    async def chains(self, context: Context):
+        supportedChains = goplusapicaller.getsupportChain()
+        embed = discord.Embed(
+            title="Supported Networks",
+            color=0xE02B2B,
+        )
+        for item in supportedChains.items():
+            embed.add_field(name=item[0], value=item[1], inline=False)
 
+        await context.send(embed=embed)
     @commands.hybrid_command(
         name="cscan",
         description="Scan an address for contracts",
@@ -98,7 +113,7 @@ class GoPlus(commands.Cog, name="goplus"):
     async def nftContractScan(self, context: Context, network: str, address: str = "0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D"
                               ) -> None:
         """
-        Kick a user out of the server.
+        xxx.
 
         :param context: The hybrid command context.
         :param network: [1] Ethereum Mainnet

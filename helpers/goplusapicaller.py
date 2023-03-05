@@ -56,17 +56,17 @@ def extractSafeyVector(address, contractResult):
     # print(firstItem)
     return {
         "is_blacklisted":
-        bool(int(firstItem.get("is_blacklisted", "Unknown"))),
+        bool(int(firstItem.get("is_blacklisted", False))),
         "is_honeypot":
-        bool(int(firstItem.get("is_honeypot", "Unknown"))),
+        bool(int(firstItem.get("is_honeypot", False))),
         "is_in_dex":
-        bool(int(firstItem.get("is_in_dex", "Unknown"))),
+        bool(int(firstItem.get("is_in_dex", False))),
         "is_open_source":
-        bool(int(firstItem.get("is_open_source", "Unknown"))),
+        bool(int(firstItem.get("is_open_source", False))),
         "can_take_back_ownership":
-        bool(int(firstItem.get("can_take_back_ownership", "Unknown"))),
+        bool(int(firstItem.get("can_take_back_ownership", False))),
         "is_proxy":
-        bool(int(firstItem.get("is_proxy", "Unknown"))),
+        bool(int(firstItem.get("is_proxy", False))),
         "buy_tax":
         firstItem.get("buy_tax", "None"),
         "sell_tax":
@@ -87,9 +87,9 @@ if __name__ == "__main__":
     print(
         json.dumps(getContractScan(
             1, "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d"),
-                   indent=2))
+            indent=2))
     print("--------")
     print(
         json.dumps(getNFTSecurity(
             1, "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d"),
-                   indent=2))
+            indent=2))
