@@ -33,8 +33,11 @@ class TestStringMethods(unittest.TestCase):
         print(goplusapicaller.extractSafeyVector(addr, ret))
         # print(json_string)
         self.assertEqual(goplusapicaller.hello(), 'hello')
-
-
+    def test_networkId(self):
+        ret = goplusapicaller.getsupportChain()
+        print(goplusapicaller.getsupportChain())
+        # print(json_string)
+        self.assertEqual(goplusapicaller.hello(), 'hello')   
 
 if __name__ == '__main__':
     unittest.main()
