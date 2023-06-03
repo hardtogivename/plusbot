@@ -13,7 +13,6 @@ import os
 import platform
 import random
 import sys
-
 import aiosqlite
 import discord
 from discord.ext import commands, tasks
@@ -178,20 +177,6 @@ eth_address_pattern = re.compile(r'0x[a-fA-F0-9]{40}')
 def contains_eth_address(string):
     return bool(eth_address_pattern.search(string))
 
-
-@bot.event
-async def on_message(message: discord.Message) -> None:
-    """
-    The code in this event is executed every time someone sends a message, with or without the prefix
-
-    :param message: The message that was sent.
-    """
-    if contains_eth_address(message.content):
-        await message.channel.send("ETH address detected, pls use $cscan command to scan for safety. The syntax is $cscan [chain id] [address]")
-    if message.author == bot.user or message.author.bot:
-        return
-    await bot.process_commands(message)
-
 @bot.event
 async def on_command_completion(context: Context) -> None:
     """
@@ -211,8 +196,6 @@ async def on_command_completion(context: Context) -> None:
         bot.logger.info(
             f"Executed {executed_command} command by {context.author} (ID: {context.author.id}) in DMs"
         )
-
-
 @bot.event
 async def on_command_error(context: Context, error) -> None:
     """

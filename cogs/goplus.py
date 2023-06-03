@@ -43,8 +43,6 @@ class GoPlus(commands.Cog, name="goplus"):
         name="chainids",
         description="This command will return the chain ids for the supported networks.",
     )
-    # This will only allow non-blacklisted members to execute the command
-    @checks.not_blacklisted()
     async def chains(self, context: Context):
         supportedChains = goplusapicaller.getsupportChain()
         embed = discord.Embed(
@@ -105,6 +103,7 @@ class GoPlus(commands.Cog, name="goplus"):
 
         await context.send(embed=embed)
 
+    @checks.not_blacklisted()
 
     @commands.hybrid_command(
         name="nftscan",
@@ -120,7 +119,6 @@ class GoPlus(commands.Cog, name="goplus"):
         :param network: [1] Ethereum Mainnet
         :param address: .
         """
-        import requests
         from helpers import goplusapicaller
         ret = goplusapicaller.getNFTSecurity(network, address)
         pprint = json.dumps(ret, indent=2)
