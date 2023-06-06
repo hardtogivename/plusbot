@@ -77,7 +77,12 @@ bot = commands.Bot(
 
 # Setup both of the loggers
 
-
+@app_commands.command(
+        name="test123",
+        description="This command will return the chain meta data for the supported networks.",
+    )
+async def test(ctx: Context):
+    await ctx.send("test")
 class LoggingFormatter(logging.Formatter):
     # Colors
     black = "\x1b[30m"
@@ -126,7 +131,10 @@ file_handler.setFormatter(file_handler_formatter)
 logger.addHandler(console_handler)
 logger.addHandler(file_handler)
 bot.logger = logger
-
+@bot.tree.command()
+async def helo(interaction: discord.Interaction):
+    """Help""" #Description when viewing / commands
+    await interaction.response.send_message("hello")
 
 async def init_db():
     async with aiosqlite.connect(
@@ -162,6 +170,7 @@ async def on_ready() -> None:
     if config["sync_commands_globally"]:
         bot.logger.info("Syncing commands globally...")
         await bot.tree.sync()
+        print('synced')
 
 
 @tasks.loop(minutes=1.0)
@@ -287,8 +296,6 @@ async def load_cogs() -> None:
             except Exception as e:
                 exception = f"{type(e).__name__}: {e}"
                 bot.logger.error(f"Failed to load extension {extension}\n{exception}")
-
-
 asyncio.run(init_db())
 asyncio.run(load_cogs())
 bot.run(config["token"])

@@ -1,17 +1,23 @@
 from discord.ext import commands
 from discord.ext.commands import Context
+from discord import Interaction
+from discord import app_commands
 import discord
-from helpers import checks
 from helpers import chainmetacaller
+intents = discord.Intents.default()
+bot = commands.Bot(
+    command_prefix='$',
+    intents=intents,
+    help_command=None, #todo add help command
+)
 class ChainMeta(commands.Cog, name="chainmeta"):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.hybrid_command(
-        name="chainmeta",
-        description="This command will return the chain meta data for the supported networks.",
-    )
-    async def chainmeta(self, ctx: Context, network : str, address: str):
+    
+    @bot.tree.command(name="chainmeta")
+    #description="Scans the blockchain for metadata",
+    async def chainmeta(self, ctx: Interaction, network : str, address: str):
         #from discord.ext.commands import Context as ctx
         ret = chainmetacaller.searchMeta(network, address)
         if ret == "[]":
@@ -20,7 +26,7 @@ class ChainMeta(commands.Cog, name="chainmeta"):
             color=0xE02B2B,
             )
             embed.add_field(name="Empty address", value="Maybe you added a wrong address or network? The current supported networks are ethereum_mainnet and bitcoin.", inline=True)
-            await ctx.send(embed=embed)
+            await ctx.response.send_message(embed=embed, ephemeral=True)
             return None
         
 
@@ -49,7 +55,6 @@ class ChainMeta(commands.Cog, name="chainmeta"):
             embed.add_field(name="Submitted By", value=l.submitted_by, inline=True)
             embed.add_field(name="Submitted On", value=l.submitted_on, inline=True)
             embed.add_field(name=" ", value=" ", inline=False)
-        await ctx.send(embed=embed)
-
+        await ctx.response.send_message(embed=embed, ephemeral=True)
 async def setup(bot):
     await bot.add_cog(ChainMeta(bot))

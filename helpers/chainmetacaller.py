@@ -9,7 +9,6 @@ def searchMeta(network : str, address : str) -> str:
     headers = {}
     payload = {}
     url = f"https://chainmeta.chaintool.ai/api/search_chainmeta?address={address}&chain={network}"
-    print(url)
     response = requests.get(url, headers=headers, data=payload)
 
     if response.status_code != 200:

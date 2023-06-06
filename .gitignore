@@ -5,7 +5,7 @@ __pycache__/
 
 # ignore vscode local config
 .vscode/
-
+config.json
 # C extensions
 *.so
 

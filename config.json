@@ -1,9 +1,9 @@
 {
   "prefix": "$",
-  "token": "MTA3OTQ5NDE5OTM1Njk1MjY1Ng.GjSawq.Vsaxs42q1MKhiPmrFbaQb3WVoC04bB-GmTAsJ4",
+  "token": "MTA3OTQ5NDE5OTM1Njk1MjY1Ng.GfGfSP.fUnLzRI-DKlXLzyBjbQten1L17R7-UJkhPsxhE",
   "permissions": "1079494199356952656",
-  "application_id": "YOUR_APPLICATION_ID_HERE",
-  "sync_commands_globally": false,
+  "application_id": "1079494199356952656",
+  "sync_commands_globally": true,
   "owners": [
     727965815214833824,
     452689824646823937
